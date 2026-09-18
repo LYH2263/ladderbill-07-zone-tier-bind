@@ -24,8 +24,21 @@ const account = computed(() => data.value?.account)
       <h3>最近抄表试算</h3>
       <label><input type="checkbox" v-model="peak" @change="bill = null" /> 尖峰</label>
       <button @click="load">刷新</button>
+      <p v-if="bill" class="resolution-line">
+        <span :class="bill.resolution?.fallback ? 'tag warn' : 'tag ok'">
+          {{ bill.resolution?.fallback ? '回退全局档表' : '片区方案' }}
+        </span>
+        片区 {{ bill.resolution?.zone_code ?? '—' }} ·
+        方案 {{ bill.resolution?.scheme_code ?? 'GLOBAL' }}
+      </p>
       <p v-if="bill">合计 <strong class="hero-num" style="font-size:1.5rem">¥{{ bill.total }}</strong></p>
       <SegmentTable :rows="bill?.segments || []" />
     </div>
   </div>
 </template>
+<style scoped>
+.resolution-line { font-size: 0.85rem; }
+.tag { padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.75rem; margin-right: 0.35rem; }
+.tag.ok { background: color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent); }
+.tag.warn { background: color-mix(in srgb, #e6a817 22%, transparent); color: #e6a817; }
+</style>

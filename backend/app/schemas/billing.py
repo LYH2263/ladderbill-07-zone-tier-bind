@@ -9,6 +9,7 @@ class BillRequest(BaseModel):
 
 
 class CompareRequest(BaseModel):
+    account_id: int | None = None
     kwh: float = Field(ge=0)
     persist: bool = False
 

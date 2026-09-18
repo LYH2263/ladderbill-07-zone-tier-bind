@@ -15,4 +15,4 @@ def post_bill(body: BillRequest):
 @router.post("/compare")
 def post_compare(body: CompareRequest):
     with BillingService() as svc:
-        return svc.run_compare(body.kwh, body.persist)
+        return svc.run_compare(body.kwh, body.persist, body.account_id)
