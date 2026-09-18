@@ -6,6 +6,7 @@ class AccountOut(BaseModel):
     name: str
     meter_no: str
     note: str | None = None
+    zone_code: str | None = None
 
 
 class TierOut(BaseModel):

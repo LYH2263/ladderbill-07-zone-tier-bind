@@ -19,12 +19,16 @@ const account = computed(() => data.value?.account)
 <template>
   <div class="page" v-if="account">
     <h1>{{ account.name }}</h1>
-    <p class="muted">表号 {{ account.meter_no }} · {{ account.note }}</p>
+    <p class="muted">表号 {{ account.meter_no }} · 片区 {{ account.zone_code || '未设置' }} · {{ account.note }}</p>
     <div class="panel">
       <h3>最近抄表试算</h3>
       <label><input type="checkbox" v-model="peak" @change="bill = null" /> 尖峰</label>
       <button @click="load">刷新</button>
       <p v-if="bill">合计 <strong class="hero-num" style="font-size:1.5rem">¥{{ bill.total }}</strong></p>
+      <p v-if="bill?.resolution" class="muted">
+        解析：{{ bill.resolution.fallback ? '回退全局档表' : `方案 #${bill.resolution.plan_id}「${bill.resolution.plan_name}」` }}
+        （{{ bill.resolution.source }}）
+      </p>
       <SegmentTable :rows="bill?.segments || []" />
     </div>
   </div>
